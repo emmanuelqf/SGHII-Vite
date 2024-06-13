@@ -14,7 +14,7 @@ function Menu1() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <a className="nav-link" href="menu.html">Inicio</a>
+                <a className="nav-link" href="menu.html"></a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">Sobre los creadores</a>
