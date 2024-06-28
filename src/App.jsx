@@ -1,21 +1,16 @@
-import { useState } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css'
-import Header from './components/header/Header'
-import Home from './components/home/Home'
-import Login from './components/login/Login';
+import { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import SidebarMenu from "./SidebarMenu";
+import Header from "./components/header/Header";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    
-      <div>
-      <Login/>
-      <Header/>
-      <Home/>
-      </div>
-  )
+    <div>
+      <Header />
+      <SidebarMenu />
+    </div>
+  );
 }
 
-export default App
+export default App;

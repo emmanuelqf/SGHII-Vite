@@ -7,13 +7,10 @@ const Header = () => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <a className="navbar-brand" href="#">
-          <img
-            src="./logo.png"
-            style={{ maxWidth: 200, height: "auto" }}
-          />
+          <img src="./logo.png" style={{ maxWidth: 200, height: "auto" }} />
         </a>
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
+          {/* <ul className="navbar-nav">
             <li className="nav-item">
               <a className="nav-link" href="menu.html">
                 Inicio
@@ -29,7 +26,7 @@ const Header = () => {
                 Ayuda
               </a>
             </li>
-          </ul>
+          </ul> */}
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
               <a className="nav-link disabled" href="#">
