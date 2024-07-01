@@ -1,14 +1,14 @@
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import SidebarMenu from "./SidebarMenu";
 import Header from "./components/header/Header";
+import SidebarMenuCollapsible from "./SidebarMenuCollapsible";
 
 function App() {
   return (
     <div>
       <Header />
-      <SidebarMenu />
+      <SidebarMenuCollapsible />
     </div>
   );
 }
