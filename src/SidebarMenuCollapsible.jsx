@@ -12,15 +12,35 @@ import {
 } from "@ant-design/icons";
 import Modal1 from "./components/modal/Modal1";
 import Modal2 from "./components/modal/Modal2";
+import Modal3 from "./components/modal/Modal3";
+import Modal4 from "./components/modal/Modal4";
+import Modal5 from "./components/modal/Modal5";
+import Modal6 from "./components/modal/Modal6";
 
 const SidebarMenuCollapsible = () => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [showModal1, setShowModal1] = useState(false);
+  const handleCloseModal1 = () => setShowModal1(false);
+  const handleShowModal1 = () => setShowModal1(true);
 
   const [showModal2, setShowModal2] = useState(false);
   const handleCloseModal2 = () => setShowModal2(false);
   const handleShowModal2 = () => setShowModal2(true);
+
+  const [showModal3, setShowModal3] = useState(false);
+  const handleCloseModal3 = () => setShowModal3(false);
+  const handleShowModal3 = () => setShowModal3(true);
+
+  const [showModal4, setShowModal4] = useState(false);
+  const handleCloseModal4 = () => setShowModal4(false);
+  const handleShowModal4 = () => setShowModal4(true);
+
+  const [showModal5, setShowModal5] = useState(false);
+  const handleCloseModal5 = () => setShowModal5(false);
+  const handleShowModal5 = () => setShowModal5(true);
+
+  const [showModal6, setShowModal6] = useState(false);
+  const handleCloseModal6 = () => setShowModal6(false);
+  const handleShowModal6 = () => setShowModal6(true);
 
   return (
     <>
@@ -55,7 +75,7 @@ const SidebarMenuCollapsible = () => {
                 <li>
                   <button
                     className="btn btn-toggle text-white align-items-center rounded"
-                    onClick={handleShow}
+                    onClick={handleShowModal1}
                   >
                     Registrar operario
                   </button>
@@ -86,24 +106,20 @@ const SidebarMenuCollapsible = () => {
             <div className="collapse" id="dashboard-collapse" style={{}}>
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
-                  <a
-                    href="#"
-                    className="d-non d-sm-inline d-flex align-itemcenter ms-3 mt-2 text-decoration-none text-white"
+                  <button
+                    className="btn btn-toggle text-white align-items-center rounded"
+                    onClick={handleShowModal3}
                   >
-                    <span className="d-non d-sm-inline d-flex align-itemcenter ms-3 mt-2">
-                      Crear herramientas
-                    </span>
-                  </a>
+                    Crear herramientas
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="d-non d-sm-inline d-flex align-itemcenter ms-3 mt-2 text-decoration-none text-white"
+                  <button
+                    className="btn btn-toggle text-white align-items-center rounded"
+                    onClick={handleShowModal4}
                   >
-                    <span className="d-non d-sm-inline d-flex align-itemcenter ms-3 mt-2">
-                      Dar baja herramienta
-                    </span>
-                  </a>
+                    Dar de baja herramienta
+                  </button>
                 </li>
               </ul>
             </div>
@@ -123,24 +139,20 @@ const SidebarMenuCollapsible = () => {
             <div className="collapse" id="orders-collapse" style={{}}>
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
-                  <a
-                    href="#"
-                    className="d-non d-sm-inline d-flex align-itemcenter ms-3 mt-2 text-decoration-none text-white"
+                  <button
+                    className="btn btn-toggle text-white align-items-center rounded"
+                    onClick={handleShowModal5}
                   >
-                    <span className="d-non d-sm-inline d-flex align-itemcenter ms-3 mt-2">
-                      Asignación Kits a operarios
-                    </span>
-                  </a>
+                    Asignación Kits a operarios
+                  </button>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="d-non d-sm-inline d-flex align-itemcenter ms-3 mt-2 text-decoration-none text-white"
+                  <button
+                    className="btn btn-toggle text-white align-items-center rounded"
+                    onClick={handleShowModal6}
                   >
-                    <span className="d-non d-sm-inline d-flex align-itemcenter ms-3 mt-2">
-                      Modificación Kits
-                    </span>
-                  </a>
+                    Modificación Kits
+                  </button>
                 </li>
               </ul>
             </div>
@@ -189,8 +201,12 @@ const SidebarMenuCollapsible = () => {
           </li>
         </ul>
       </div>
-      <Modal1 show={show} handleClose={handleClose} />
+      <Modal1 showModal1={showModal1} handleCloseModal1={handleCloseModal1} />
       <Modal2 showModal2={showModal2} handleCloseModal2={handleCloseModal2} />
+      <Modal3 showModal3={showModal3} handleCloseModal3={handleCloseModal3} />
+      <Modal4 showModal4={showModal4} handleCloseModal4={handleCloseModal4} />
+      <Modal5 showModal5={showModal5} handleCloseModal5={handleCloseModal5} />
+      <Modal6 showModal6={showModal6} handleCloseModal6={handleCloseModal6} />
     </>
   );
 };
