@@ -3,6 +3,7 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/js/dist/dropdown";
 import "./SidebarMenuCollapsible.css";
+
 import {
   AreaChartOutlined,
   IdcardOutlined,
@@ -171,32 +172,7 @@ const SidebarMenuCollapsible = () => {
               </span>
             </button>
             <div className="collapse" id="account-collapse" style={{}}>
-              <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li>
-                  <a
-                    href="#"
-                    className="d-non d-sm-inline d-flex align-itemcenter ms-3 mt-2 text-decoration-none text-white"
-                  >
-                    Perfil
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="d-non d-sm-inline d-flex align-itemcenter ms-3 mt-2 text-decoration-none text-white"
-                  >
-                    Configuración
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="d-non d-sm-inline d-flex align-itemcenter ms-3 mt-2 text-decoration-none text-white"
-                  >
-                    Cerrar sesión
-                  </a>
-                </li>
-              </ul>
+              <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small"></ul>
             </div>
           </li>
         </ul>

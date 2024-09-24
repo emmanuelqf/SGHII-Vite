@@ -1,18 +1,16 @@
-// src/App.jsx
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./Login";
-import Main from "./components/main/main";
+import App from "./App";
 
-const AppNew = () => {
+function AppRouter() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/" element={<Main />} />
+        <Route path="/app/*" element={<App />} />
       </Routes>
     </Router>
   );
-};
+}
 
-export default AppNew;
+export default AppRouter;

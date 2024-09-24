@@ -1,0 +1,18 @@
+/* Añade tus estilos generales aquí */
+.container-fluid {
+    padding: 0;
+  }
+  
+  .row {
+    margin: 0;
+  }
+  
+  .col-md-3 {
+    padding: 0;
+    background-color: #f8f9fa; /* Color de fondo para el sidebar */
+  }
+  
+  .col-md-9 {
+    padding: 20px; /* Espaciado interno para el contenido principal */
+  }
+  
