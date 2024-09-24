@@ -1,0 +1,12 @@
+.btn-toggle-nav li a:hover {
+    background: #075cdb;
+}
+
+.btn:hover {
+    background: #075cdb;
+}
+.sidebar {
+    height: 100vh;
+    position: fixed;
+  }
+  
