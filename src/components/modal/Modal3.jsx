@@ -3,26 +3,54 @@ import { Modal, Button, Form } from "react-bootstrap";
 
 const Modal3 = ({ showModal3, handleCloseModal3 }) => {
   const [nombre, setNombre] = useState("");
-  const [imagen, setImagen] = useState(null); // Cambio: estado para la imagen
-  const [marca, setMarca] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+  const [estado, setEstado] = useState("Nueva"); // Cambiado a "Nueva" como opción predeterminada
+  const [imagen, setImagen] = useState(null);
+  const [error, setError] = useState("");
 
   const handleSubmit = () => {
-    // Aquí puedes envio de los datos al servidor (nombre, imagen, marca).
-    // ...
+    if (!nombre || !descripcion || !imagen) {
+      setError("Todos los campos son obligatorios.");
+      return;
+    }
 
-    // Cerrar el modal después de procesar los datos.
-    handleCloseModal3();
+    const formData = new FormData();
+    formData.append("nombre", nombre);
+    formData.append("descripcion", descripcion);
+    formData.append("estado", estado);
+    formData.append("imagen", imagen);
+
+    fetch("/api/herramientas/create", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        handleCloseModal3();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setError("Error al crear la herramienta.");
+      });
   };
 
   const handleImageChange = (e) => {
-    // Maneja el cambio de la imagen
-    const file = e.target.files[0];
-    setImagen(file);
+    setImagen(e.target.files[0]);
+  };
+
+  const handleModalClose = () => {
+    setNombre("");
+    setDescripcion("");
+    setEstado("Nueva"); // Reinicia a "Nueva" al cerrar
+    setImagen(null);
+    setError("");
+    handleCloseModal3();
   };
 
   return (
     <>
-      <Modal show={showModal3} onHide={handleCloseModal3} animation={true}>
+      <Modal show={showModal3} onHide={handleModalClose} animation={true}>
         <Modal.Header closeButton>
           <Modal.Title>Creación de herramienta</Modal.Title>
         </Modal.Header>
@@ -37,27 +65,40 @@ const Modal3 = ({ showModal3, handleCloseModal3 }) => {
                 onChange={(e) => setNombre(e.target.value)}
               />
             </Form.Group>
-            <Form.Group controlId="formMarca">
-              <Form.Label>Marca</Form.Label>
+            <Form.Group controlId="formDescripcion">
+              <Form.Label>Descripción</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Marca"
-                value={marca}
-                onChange={(e) => setMarca(e.target.value)}
+                placeholder="Descripción de la herramienta"
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
               />
+            </Form.Group>
+            <Form.Group controlId="formEstado">
+              <Form.Label>Estado</Form.Label>
+              <Form.Control
+                as="select"
+                value={estado}
+                onChange={(e) => setEstado(e.target.value)}
+              >
+                <option value="Nueva">Nueva</option>
+                <option value="Reparada">Reparada</option>
+                <option value="Provisional">Provisional</option>
+              </Form.Control>
             </Form.Group>
             <Form.Group controlId="formImagen">
               <Form.Label>Imagen de la herramienta</Form.Label>
               <Form.Control
-                type="file" // Cambio: campo de carga de archivo
-                accept="image/*" // Acepta solo imágenes
+                type="file"
+                accept="image/*"
                 onChange={handleImageChange}
               />
             </Form.Group>
+            {error && <div className="text-danger mt-2">{error}</div>}
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal3}>
+          <Button variant="secondary" onClick={handleModalClose}>
             Cerrar
           </Button>
           <Button variant="primary" onClick={handleSubmit}>

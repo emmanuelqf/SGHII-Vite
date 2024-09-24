@@ -45,7 +45,7 @@ const SidebarMenuCollapsible = () => {
   return (
     <>
       <div
-        className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
+        className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar"
         style={{ width: 280 }}
       >
         <a
@@ -60,24 +60,24 @@ const SidebarMenuCollapsible = () => {
         <ul className="list-unstyled ps-0">
           <li className="mb-1">
             <button
-              className="btn btn-toggle text-white align-items-center rounded"
+              className="btn btn-toggle text-white align-items-center rounded collapsed"
               data-bs-toggle="collapse"
               data-bs-target="#home-collapse"
-              aria-expanded="true"
+              aria-expanded="false"
             >
               <IdcardOutlined />
               <span className="d-non d-sm-inline d-flex align-itemcenter ms-3 mt-2">
-                Operarios
+                Empleados
               </span>
             </button>
-            <div className="collapse show" id="home-collapse" style={{}}>
+            <div className="collapse" id="home-collapse" style={{}}>
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li>
                   <button
                     className="btn btn-toggle text-white align-items-center rounded"
                     onClick={handleShowModal1}
                   >
-                    Registrar operario
+                    Registrar empleado
                   </button>
                 </li>
                 <li>
@@ -85,7 +85,7 @@ const SidebarMenuCollapsible = () => {
                     className="btn btn-toggle text-white align-items-center rounded"
                     onClick={handleShowModal2}
                   >
-                    Consultar operario
+                    Consultar empleado
                   </button>
                 </li>
               </ul>
@@ -100,7 +100,7 @@ const SidebarMenuCollapsible = () => {
             >
               <ToolFilled />
               <span className="d-non d-sm-inline d-flex align-itemcenter ms-3 mt-2">
-                Herramientas
+                Herramienta
               </span>
             </button>
             <div className="collapse" id="dashboard-collapse" style={{}}>
@@ -110,7 +110,7 @@ const SidebarMenuCollapsible = () => {
                     className="btn btn-toggle text-white align-items-center rounded"
                     onClick={handleShowModal3}
                   >
-                    Crear herramientas
+                    Crear herramienta
                   </button>
                 </li>
                 <li>
@@ -118,7 +118,7 @@ const SidebarMenuCollapsible = () => {
                     className="btn btn-toggle text-white align-items-center rounded"
                     onClick={handleShowModal4}
                   >
-                    Dar de baja herramienta
+                    Opciones herramienta
                   </button>
                 </li>
               </ul>
@@ -143,7 +143,7 @@ const SidebarMenuCollapsible = () => {
                     className="btn btn-toggle text-white align-items-center rounded"
                     onClick={handleShowModal5}
                   >
-                    Asignación Kits a operarios
+                    Asignar o Recibir
                   </button>
                 </li>
                 <li>
@@ -151,7 +151,7 @@ const SidebarMenuCollapsible = () => {
                     className="btn btn-toggle text-white align-items-center rounded"
                     onClick={handleShowModal6}
                   >
-                    Modificación Kits
+                    Movimiento herramienta
                   </button>
                 </li>
               </ul>

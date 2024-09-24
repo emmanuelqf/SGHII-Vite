@@ -1,101 +1,179 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import Table from "react-bootstrap/Table";
 
 const Modal6 = ({ showModal6, handleCloseModal6 }) => {
-  const [Id, setId] = useState("");
-  const [rol, setRol] = useState("");
-  const [kitNumber, setKitNum] = useState("");
+  const [movimientos, setMovimientos] = useState([]);
+  const [selectedMovimiento, setSelectedMovimiento] = useState(null);
+  const [descripcion, setDescripcion] = useState("");
+  const [tipoMovimiento, setTipoMovimiento] = useState("");
+  const [idHerramienta, setIdHerramienta] = useState("");
+  const [idEmpleado, setIdEmpleado] = useState("");
 
-  // Lógica para llenar las opciones del formulario de kits según el rol seleccionado
-  const getKitOptions = () => {
-    if (rol === "1") {
-      return (
-        <>
-          <option value="S1">S1</option>
-          <option value="S2">S2</option>
-        </>
+  useEffect(() => {
+    // Lógica para obtener todos los movimientos al abrir el modal
+    const fetchMovimientos = async () => {
+      const response = await fetch(
+        "http://localhost:8080/movimientoHerramienta/mostrar"
       );
-    } else if (rol === "2") {
-      return (
-        <>
-          <option value="D1">D1</option>
-          <option value="D2">D2</option>
-        </>
+      const data = await response.json();
+      setMovimientos(data);
+    };
+    fetchMovimientos();
+  }, [showModal6]); // Cargar datos al abrir el modal
+
+  const handleSelectMovimiento = (movimiento) => {
+    setSelectedMovimiento(movimiento);
+    setDescripcion(movimiento.descripcion);
+    setTipoMovimiento(movimiento.tipoMovimiento);
+    setIdHerramienta(movimiento.herramienta.id);
+    setIdEmpleado(movimiento.empleado.id);
+  };
+
+  const handleModifyMovimiento = async () => {
+    // Lógica para modificar el movimiento
+    const updatedMovimiento = {
+      descripcion,
+      tipoMovimiento,
+      herramienta: { id: idHerramienta },
+      empleado: { id: idEmpleado },
+    };
+
+    const response = await fetch(
+      `http://localhost:8080/movimientoHerramienta/modificar`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedMovimiento),
+      }
+    );
+
+    if (response.ok) {
+      // Actualiza la lista de movimientos después de la modificación
+      const updatedMovimientos = movimientos.map((mov) =>
+        mov.id === selectedMovimiento.id ? updatedMovimiento : mov
       );
-    } else if (rol === "3") {
-      return (
-        <>
-          <option value="A1">A1</option>
-          <option value="A2">A2</option>
-        </>
-      );
+      setMovimientos(updatedMovimientos);
+      handleCloseModal6();
     } else {
-      return <option value="">---</option>;
+      console.error("Error al modificar el movimiento");
     }
   };
 
-  const handleAssignKit = () => {
-    // Agrega la lógica aquí para asignar el kit al operario
-    // ...
+  const handleDeleteMovimiento = async (id) => {
+    const response = await fetch(
+      `http://localhost:8080/movimientoHerramienta/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
 
-    // Cierra el modal después de procesar los datos
-    handleCloseModal6();
+    if (response.ok) {
+      // Elimina el movimiento de la lista
+      setMovimientos(movimientos.filter((mov) => mov.id !== id));
+    } else {
+      console.error("Error al eliminar el movimiento");
+    }
   };
 
   return (
-    <>
-      <Modal show={showModal6} onHide={handleCloseModal6} animation={true}>
-        <Modal.Header closeButton>
-          <Modal.Title>Asignación de kit a operario</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+    <Modal
+      show={showModal6}
+      onHide={handleCloseModal6}
+      animation={true}
+      size="lg"
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Gestión de Movimientos de Herramientas</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Descrip</th>
+              <th>Tipo Movimiento</th>
+              <th>ID Herramienta</th>
+              <th>ID Empleado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {movimientos.map((movimiento) => (
+              <tr
+                key={movimiento.id}
+                onClick={() => handleSelectMovimiento(movimiento)}
+              >
+                <td>{movimiento.descripcion}</td>
+                <td>{movimiento.tipoMovimiento}</td>
+                <td>{movimiento.herramienta.id}</td>
+                <td>{movimiento.empleado.id}</td>
+                <td>
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDeleteMovimiento(movimiento.id)}
+                  >
+                    Eliminar
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+
+        {selectedMovimiento && (
           <Form>
-            <Form.Group controlId="formId">
-              <Form.Label>Id del kit</Form.Label>
+            <Form.Group controlId="formDescripcion">
+              <Form.Label>Descripción</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Id del kit en caso de conocerlo"
-                value={Id}
-                onChange={(e) => setId(e.target.value)}
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
               />
             </Form.Group>
-            <Form.Group controlId="formRol">
-              <Form.Label>Rol</Form.Label>
+            <Form.Group controlId="formTipoMovimiento">
+              <Form.Label>Tipo de Movimiento</Form.Label>
               <Form.Control
-                as="select"
-                value={rol}
-                onChange={(e) => setRol(e.target.value)}
-              >
-                <option value="">---</option>
-                <option value="1">Soldador</option>
-                <option value="2">Doblador</option>
-                <option value="3">Auxiliar</option>
-              </Form.Control>
+                type="text"
+                value={tipoMovimiento}
+                onChange={(e) => setTipoMovimiento(e.target.value)}
+              />
             </Form.Group>
-            <Form.Group controlId="formKitNumber">
-              <Form.Label>Seleccione el kit a editar</Form.Label>
+            <Form.Group controlId="formIdHerramienta">
+              <Form.Label>ID de la Herramienta</Form.Label>
               <Form.Control
-                as="select"
-                value={kitNumber}
-                onChange={(e) => setKitNum(e.target.value)}
-              >
-                {getKitOptions()}
-              </Form.Control>
+                type="number"
+                value={idHerramienta}
+                onChange={(e) => setIdHerramienta(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="formIdEmpleado">
+              <Form.Label>ID del Empleado</Form.Label>
+              <Form.Control
+                type="number"
+                value={idEmpleado}
+                onChange={(e) => setIdEmpleado(e.target.value)}
+              />
             </Form.Group>
           </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal6}>
-            Cerrar
-          </Button>
-          <Button variant="primary" onClick={handleAssignKit}>
-            Quitar herramienta del kit
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+        )}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleCloseModal6}>
+          Cerrar
+        </Button>
+        <Button
+          variant="primary"
+          onClick={handleModifyMovimiento}
+          disabled={!selectedMovimiento}
+        >
+          Modificar Movimiento
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

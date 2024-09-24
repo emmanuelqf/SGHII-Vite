@@ -5,3 +5,8 @@
 .btn:hover {
     background: #075cdb;
 }
+.sidebar {
+    height: 100vh;
+    position: fixed;
+  }
+  
